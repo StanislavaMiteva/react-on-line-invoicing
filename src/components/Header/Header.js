@@ -6,11 +6,12 @@ const Header = () => {
     return (
         <header className="site-header">
             <nav className="header-navbar">
-                <section className="navbar-user">
+                <section className="navbar-user page-wrapper">
                     <article className="first-bar">
                         <Link to="/">On-line Invoicing</Link>
-                        <Link className="button" to="/add">New Invoice</Link>
-                        <Link className="button" to="/all">All Invoices</Link>
+                        <Link className="button" to="/invoice/add">New Invoice</Link>
+                        <Link className="button" to="/invoice/all">All Invoices</Link>
+                        <Link className="button" to="/all">Clients</Link>
                     </article>
                     <article className="second-bar">
                         <ul>
