@@ -1,0 +1,99 @@
+.register form,
+.login form {
+  margin: 5rem auto;
+  max-width: 40rem;
+}
+
+.register form,
+.register form fieldset,
+.register form legend,
+.register form label,
+.register form input,
+.login form,
+.login form fieldset,
+.login form legend,
+.login form label,
+.login form input {
+	display: block;
+}
+
+.register form fieldset,
+.login form fieldset{
+    padding: 2.5em 2em 2em 2em;
+	position: relative;
+}
+
+.register form fieldset,
+.login form fieldset,
+.register form legend,
+.login form legend {
+	border: 1px solid #666;
+	background: #F9F9F9;
+	border-radius: 0.3rem;
+	box-shadow: 0 0 1rem 0.1rem rgba(0, 0, 0, 0.1);
+}
+
+.register form legend,
+.login form legend {
+	width: 30%;
+	padding: 0.5rem 1rem;
+	left: -1px;
+	top: -1.4rem;
+	position: absolute;
+}
+
+.field .input {
+	display: flex;
+	position: relative;
+	align-items: center;
+}
+
+.field .input:after {
+	display: block;
+	content: '';
+}
+
+
+.field .input input {
+	border: none;
+	flex: 1 1 auto;
+	padding: 0.8rem;
+	outline: none;
+	background: transparent;
+	z-index: 2;
+	order: 2;
+}
+
+.field .input .fas {
+	z-index: 2;
+	position: relative;
+	padding: 0 0 0 0.8rem;
+	font-size: 0.9em;
+	order: 1;
+}
+
+.field .input input+.actions {
+	display: block;
+	background: #FFF;
+	border: 1px solid #CCC;
+	border-radius: 0.3rem;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 1;
+}
+
+.field .input input:focus+.actions {
+	border-color: #090;
+}
+
+.field .input input:focus+.actions+.fas {
+	color: #090;
+}
+
+.register form label,
+.login form label {
+	font-weight: bold;
+}
