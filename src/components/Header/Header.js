@@ -11,7 +11,7 @@ const Header = () => {
                         <Link to="/">On-line Invoicing</Link>
                         <Link className="button" to="/invoice/add">New Invoice</Link>
                         <Link className="button" to="/invoice/all">All Invoices</Link>
-                        <Link className="button" to="/all">Clients</Link>
+                        <Link className="button" to="/Counterparties">Counterparties</Link>
                     </article>
                     <article className="second-bar">
                         <ul>

@@ -17,6 +17,22 @@ if (!firebase.apps.length) {
 firebase.auth().onAuthStateChanged((user) => {
     if (user) {
         console.log('Logged in');
+        let email = user.email;
+        let emailVerified = user.emailVerified;
+        let isAnonymous = user.isAnonymous;
+        let uid = user.uid;
+        console.log(user);
+        console.log(email);
+        console.log(emailVerified);
+        console.log(isAnonymous);
+        console.log(uid);
+
+        firebase.auth().currentUser.getIdToken()
+        .then((token)=> {
+            console.log(token);
+            sessionStorage.setItem('token', token);
+            sessionStorage.setItem('username', email);
+        })
     }
     else {
         console.log('Logged out')
