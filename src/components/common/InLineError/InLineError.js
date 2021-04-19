@@ -1,3 +1,5 @@
+import './InLineError.css';
+
 const InLineError = ({field, errors}) => {
     if (!errors) {
         return null;
@@ -10,7 +12,7 @@ const InLineError = ({field, errors}) => {
     return (
         <div className='errors-container'>
             <ul>
-                {errors[field].map(error => <li key={error.index}>{error}</li>)}
+                {errors[field].map((error, index) => <li key={index}>{error}</li>)}
             </ul>
         </div>
     );

@@ -37,11 +37,11 @@ export class AddCounterpartyModal extends Component {
             .then(response => {
                 if (response.status === 400) {
                     console.log("Response status 400")
-                    this.state.responseStatus='BadRequest';                    
+                    this.setState({ responseStatus: 'BadRequest' });          
                 }
                 else if (response.ok) {
                     console.log("Response status OK")
-                    this.state.responseStatus='Created';
+                    this.setState({ responseStatus: 'Created' });
                 }
 
                 return response.json();
