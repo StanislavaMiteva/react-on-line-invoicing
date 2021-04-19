@@ -14,6 +14,7 @@ export class AddCounterpartyModal extends Component {
         }
 
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
+        this.onClickCloseButtonHandler = this.onClickCloseButtonHandler.bind(this);
     }
 
     onSubmitHandler(event) {
@@ -37,7 +38,7 @@ export class AddCounterpartyModal extends Component {
             .then(response => {
                 if (response.status === 400) {
                     console.log("Response status 400")
-                    this.setState({ responseStatus: 'BadRequest' });          
+                    this.setState({ responseStatus: 'BadRequest' });
                 }
                 else if (response.ok) {
                     console.log("Response status OK")
@@ -50,11 +51,12 @@ export class AddCounterpartyModal extends Component {
             .then(data => {
                 console.log(data);
                 console.log(this.state.responseStatus)
-                if (this.state.responseStatus==='Created') {
+                if (this.state.responseStatus === 'Created') {
                     alert("Counterparty was successfully added.");
+                    this.setState({ errors: {}, responseStatus: '' })
                     this.props.onHide();
                 }
-                else if (this.state.responseStatus='BadRequest' && data.errors == null) {
+                else if (this.state.responseStatus = 'BadRequest' && data.errors == null) {
                     console.log(data);
                     this.setState({ errors: data })
                 }
@@ -62,8 +64,13 @@ export class AddCounterpartyModal extends Component {
                     console.log(data.errors);
                     this.setState({ errors: data.errors })
                 }
-            })     
+            })
 
+    }
+
+    onClickCloseButtonHandler() {
+        this.props.onHide();
+        this.setState({ errors: {}, responseStatus: '' })
     }
 
     render() {
@@ -78,8 +85,10 @@ export class AddCounterpartyModal extends Component {
                     size="sm"
                     aria-labelledby="contained-modal-title-vcenter"
                     centered
+                    backdrop="static"
+                    keyboard={false}
                 >
-                    <Modal.Header closeButton>
+                    <Modal.Header>
                         <Modal.Title id='contained-modal-title-vcenter'>
                             Add Counterparty
                         </Modal.Title>
@@ -144,7 +153,7 @@ export class AddCounterpartyModal extends Component {
                     </Modal.Body>
 
                     <Modal.Footer>
-                        <Button variant="danger" onClick={this.props.onHide}>Close</Button>
+                        <Button variant="danger" onClick={this.onClickCloseButtonHandler}>Close</Button>
                     </Modal.Footer>
 
                 </Modal>
