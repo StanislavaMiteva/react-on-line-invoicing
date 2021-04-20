@@ -16,6 +16,13 @@ export const getById = (counterpartyId) => {
         .catch(error => console.log(error));
 }
 
-export const post = () => {
-    return fetch
+export const post = (counterparty) => {
+    return fetch(process.env.REACT_APP_API + 'CounterpartiesApi', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(counterparty)
+    }
+    );
 }

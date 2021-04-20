@@ -19,16 +19,30 @@ class Counterparties extends Component {
     }
 
     componentDidMount() {
+        console.log("did mount counterparties")
         counterpariesService.getAll()
             .then(data => {
                 this.setState({ counterparties: data })
             })
     }
 
+    componentDidUpdate() {
+        console.log("update counterparties")
+    }    
+    
+    addModalClose = () => {
+        this.setState({ addModalShow: false })
+        console.log("inside addModalClose")
+        counterpariesService.getAll()
+            .then(data => {
+                this.setState({ counterparties: data })
+            })
+
+    }
+
     render() {
         const counterparties = this.state.counterparties;
-        let addModalClose = () => this.setState({ addModalShow: false })
-
+        
         if (counterparties.length === 0) {
             return <span>Loading counterparties.....</span>
         }
@@ -68,7 +82,7 @@ class Counterparties extends Component {
                         onClick={() => this.setState({ addModalShow: true })}>
                         Add Counterparty
                     </Button>
-                    <AddCounterpartyModal show={this.state.addModalShow} onHide={addModalClose} />
+                    <AddCounterpartyModal show={this.state.addModalShow} onHide={this.addModalClose} />
                 </ButtonToolbar>
             </div>
         );

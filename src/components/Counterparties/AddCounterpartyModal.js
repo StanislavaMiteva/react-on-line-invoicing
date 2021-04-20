@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { Modal, Button, Row, Col, Form } from 'react-bootstrap';
 
-//import * as counterpariesService from '../../Services/counterpartiesService';
+import * as counterpariesService from '../../Services/counterpartiesService';
 import InLineError from '../common/InLineError/InLineError';
 
 export class AddCounterpartyModal extends Component {
@@ -27,14 +27,7 @@ export class AddCounterpartyModal extends Component {
             cityName: event.target.cityName.value,
         }
 
-        fetch(process.env.REACT_APP_API + 'CounterpartiesApi', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(counterparty)
-        }
-        )
+        counterpariesService.post(counterparty)
             .then(response => {
                 if (response.status === 400) {
                     console.log("Response status 400")
@@ -74,7 +67,7 @@ export class AddCounterpartyModal extends Component {
     }
 
     render() {
-        console.log("render");
+        console.log("render modal form");
         const errors = this.state.errors;
         console.log(errors);
         console.log(this.props.show)
@@ -92,13 +85,13 @@ export class AddCounterpartyModal extends Component {
                         <Modal.Title id='contained-modal-title-vcenter'>
                             Add Counterparty
                         </Modal.Title>
+                        <Button variant="danger" onClick={this.onClickCloseButtonHandler}>Close</Button>
                     </Modal.Header>
 
                     <Modal.Body>
                         <Row>
                             <Col sm={12}>
-                                <Form onSubmit={this.onSubmitHandler}>
-                                    <InLineError field='' errors={errors} />
+                                <Form onSubmit={this.onSubmitHandler}>                                    
                                     <Form.Group controlId='CounterpartyName'>
                                         <Form.Label>Counterparty Name</Form.Label>
                                         <Form.Control
@@ -152,9 +145,9 @@ export class AddCounterpartyModal extends Component {
                         </Row>
                     </Modal.Body>
 
-                    <Modal.Footer>
+                    {/* <Modal.Footer>
                         <Button variant="danger" onClick={this.onClickCloseButtonHandler}>Close</Button>
-                    </Modal.Footer>
+                    </Modal.Footer> */}
 
                 </Modal>
             </div>
