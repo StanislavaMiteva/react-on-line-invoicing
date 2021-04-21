@@ -4,7 +4,7 @@ import { Modal, Button, Row, Col, Form } from 'react-bootstrap';
 import * as counterpariesService from '../../Services/counterpartiesService';
 import InLineError from '../common/InLineError/InLineError';
 
-export class AddCounterpartyModal extends Component {
+export class EditCounterpartyModal extends Component {
     constructor(props) {
         super(props);
 
@@ -21,13 +21,14 @@ export class AddCounterpartyModal extends Component {
         event.preventDefault();
 
         let counterparty = {
+            id: event.target.CounterpartyId.value,
             name: event.target.CounterpartyName.value,
             vat: event.target.vat.value,
             address: event.target.address.value,
             cityName: event.target.cityName.value,
         }
 
-        counterpariesService.post(counterparty)
+        counterpariesService.put(counterparty)
             .then(response => {
                 if (response.status === 400) {
                     console.log("Response status 400")
@@ -35,7 +36,11 @@ export class AddCounterpartyModal extends Component {
                 }
                 else if (response.ok) {
                     console.log("Response status OK")
-                    this.setState({ responseStatus: 'Created' });
+                    this.setState({ responseStatus: 'OK' });
+                }
+                else if (response.status === 404) {
+                    console.log("Response status 404")
+                    this.setState({ responseStatus: 'NotFound' });
                 }
 
                 return response.json();
@@ -44,8 +49,8 @@ export class AddCounterpartyModal extends Component {
             .then(data => {
                 console.log(data);
                 console.log(this.state.responseStatus)
-                if (this.state.responseStatus === 'Created') {
-                    alert("Counterparty was successfully added.");
+                if (this.state.responseStatus === 'OK') {
+                    alert("Counterparty was successfully edited.");
                     this.setState({ errors: {}, responseStatus: '' })
                     this.props.onHide();
                 }
@@ -62,15 +67,15 @@ export class AddCounterpartyModal extends Component {
     }
 
     onClickCloseButtonHandler() {
-        this.props.onHide();
         this.setState({ errors: {}, responseStatus: '' })
+        this.props.onHide();
     }
 
     render() {
         console.log("render modal form");
         const errors = this.state.errors;
         console.log(errors);
-        console.log(this.props.show)
+        console.log(this.props)
         return (
             <div className='container'>
                 <Modal
@@ -83,7 +88,7 @@ export class AddCounterpartyModal extends Component {
                 >
                     <Modal.Header>
                         <Modal.Title id='contained-modal-title-vcenter'>
-                            Add Counterparty
+                            Edit Counterparty
                         </Modal.Title>
                         <Button variant="danger" onClick={this.onClickCloseButtonHandler}>Close</Button>
                     </Modal.Header>
@@ -92,12 +97,25 @@ export class AddCounterpartyModal extends Component {
                         <Row>
                             <Col sm={12}>
                                 <Form onSubmit={this.onSubmitHandler}>                                    
+                                <Form.Group controlId='CounterpartyId'>
+                                        <Form.Label>Counterparty Id</Form.Label>
+                                        <Form.Control
+                                            type='text'
+                                            name='CounterpartyId'
+                                            required
+                                            disabled
+                                            defaultValue={this.props.counterparty.id}
+                                            placeholder='Counterparty Id'
+                                        />
+                                        <InLineError field='Id' errors={errors} />
+                                    </Form.Group>
                                     <Form.Group controlId='CounterpartyName'>
                                         <Form.Label>Counterparty Name</Form.Label>
                                         <Form.Control
                                             type='text'
                                             name='CounterpartyName'
                                             required
+                                            defaultValue={this.props.counterparty.name}
                                             placeholder='Counterparty Name'
                                         />
                                         <InLineError field='Name' errors={errors} />
@@ -108,6 +126,7 @@ export class AddCounterpartyModal extends Component {
                                             type='text'
                                             name='vat'
                                             required
+                                            defaultValue={this.props.counterparty.vat}
                                             placeholder='Bulstat'
                                         />
                                         <Form.Text className="text-muted">
@@ -121,6 +140,7 @@ export class AddCounterpartyModal extends Component {
                                             type='text'
                                             name='address'
                                             required
+                                            defaultValue={this.props.counterparty.address}
                                             placeholder='Address'
                                         />
                                         <InLineError field='Address' errors={errors} />
@@ -131,13 +151,14 @@ export class AddCounterpartyModal extends Component {
                                             type='text'
                                             name='cityName'
                                             required
+                                            defaultValue={this.props.counterparty.cityName}
                                             placeholder='City'
                                         />
                                         <InLineError field='CityName' errors={errors} />
                                     </Form.Group>
                                     <Form.Group>
                                         <Button variant='primary' type='submit'>
-                                            Add Counterparty
+                                            Update Counterparty
                                         </Button>
                                     </Form.Group>
                                 </Form>

@@ -17,8 +17,19 @@ export const getById = (counterpartyId) => {
 }
 
 export const post = (counterparty) => {
-    return fetch(process.env.REACT_APP_API + 'CounterpartiesApi', {
+    return fetch(URL, {
         method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(counterparty)
+    }
+    );
+}
+
+export const put = (counterparty) => {
+    return fetch(`${URL}/${counterparty.id}`, {
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
